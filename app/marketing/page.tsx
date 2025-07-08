@@ -88,9 +88,9 @@ export default function MarketingOverview() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
       <CreatorNavbar />
       <CreatorSidebar />
-      
+
       {/* Hero Section */}
-      <section className="pt-24 pb-12 ml-20 bg-gradient-to-br from-purple-600 via-blue-600 to-teal-600">
+      <section className="pt-20 pb-12 ml-64 bg-gradient-to-br from-purple-600 via-blue-600 to-teal-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -164,7 +164,7 @@ export default function MarketingOverview() {
               >
                 <Card className="h-full hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden">
                   <div className={`h-2 bg-gradient-to-r ${tool.color}`} />
-                  
+
                   <CardHeader className="pb-4">
                     <div className="flex items-center justify-between mb-4">
                       <div className={`w-16 h-16 bg-gradient-to-r ${tool.color} rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
@@ -175,7 +175,7 @@ export default function MarketingOverview() {
                         <div className="text-2xl font-bold text-green-600">{tool.stats.conversion}</div>
                       </div>
                     </div>
-                    
+
                     <CardTitle className="text-2xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
                       {tool.title}
                     </CardTitle>
@@ -263,19 +263,19 @@ export default function MarketingOverview() {
                     <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
                       {story.avatar}
                     </div>
-                    
+
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       {story.name}
                     </h3>
-                    
+
                     <p className="text-gray-600 mb-3">
                       {story.product}
                     </p>
-                    
+
                     <Badge variant="secondary" className="mb-4">
                       {story.strategy}
                     </Badge>
-                    
+
                     <div className="text-2xl font-bold text-green-600">
                       {story.result}
                     </div>
@@ -303,7 +303,7 @@ export default function MarketingOverview() {
             <p className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
               Join thousands of African creators who are already using our marketing tools to grow their digital businesses
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
               <Link href="/dashboard/create">
                 <Button

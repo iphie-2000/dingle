@@ -71,7 +71,7 @@ const CreatorSidebar = () => {
   return (
     <TooltipProvider>
       <motion.div
-        className={`fixed left-4 top-1/2 -translate-y-1/2 z-40 bg-white/95 backdrop-blur-md border border-gray-200 rounded-2xl shadow-xl ${
+        className={`fixed left-0 top-0 h-full z-40 bg-white border-r border-gray-200 shadow-sm ${
           isCollapsed ? 'w-16' : 'w-64'
         } transition-all duration-300`}
         initial={{ x: -100, opacity: 0 }}
@@ -79,8 +79,8 @@ const CreatorSidebar = () => {
         transition={{ duration: 0.5 }}
       >
         {/* Header */}
-        <div className="p-4 border-b border-gray-100">
-          <div className="flex items-center justify-between">
+        <div className="p-4 border-b border-gray-100 h-20 flex items-center">
+          <div className="flex items-center justify-between w-full">
             {!isCollapsed && (
               <motion.h2
                 className="text-lg font-bold gradient-text"
@@ -107,7 +107,7 @@ const CreatorSidebar = () => {
         </div>
 
         {/* Navigation Items */}
-        <div className="p-2">
+        <div className="p-4 pt-6">
           {sidebarItems.map((item, index) => {
             const isActive = isActiveRoute(item.href);
             
@@ -123,7 +123,7 @@ const CreatorSidebar = () => {
                     <TooltipTrigger asChild>
                       <Link href={item.href}>
                         <motion.div
-                          className={`flex items-center justify-center p-3 rounded-xl mb-2 transition-all duration-200 hover:scale-105 ${
+                          className={`flex items-center justify-center p-3 rounded-xl mb-3 transition-all duration-200 hover:scale-105 ${
                             isActive
                               ? 'bg-gradient-to-r from-orange-500 to-purple-600 text-white shadow-lg'
                               : 'hover:bg-gray-100 text-gray-600'
@@ -142,7 +142,7 @@ const CreatorSidebar = () => {
                 ) : (
                   <Link href={item.href}>
                     <motion.div
-                      className={`flex items-center space-x-3 p-3 rounded-xl mb-2 transition-all duration-200 hover:scale-105 ${
+                      className={`flex items-center space-x-3 p-3 rounded-xl mb-3 transition-all duration-200 hover:scale-105 ${
                         isActive
                           ? 'bg-gradient-to-r from-orange-500 to-purple-600 text-white shadow-lg'
                           : 'hover:bg-gray-100 text-gray-600'
@@ -163,7 +163,7 @@ const CreatorSidebar = () => {
         {/* Footer */}
         {!isCollapsed && (
           <motion.div
-            className="p-4 border-t border-gray-100"
+            className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-100"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
