@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -124,7 +123,7 @@ const CreatorSidebar = () => {
         <div className="p-4 pt-6">
           {sidebarItems.map((item, index) => {
             const isActive = isActiveRoute(item.href);
-            
+
             return (
               <motion.div
                 key={item.href}
