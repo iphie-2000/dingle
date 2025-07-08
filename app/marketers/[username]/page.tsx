@@ -1,6 +1,22 @@
 'use client';
 
 import { useState } from 'react';
+
+// Required for static export - generates all possible username paths at build time
+export async function generateStaticParams() {
+  // In a real app, this would fetch from your API/database
+  // For now, we'll return the mock usernames that exist in the app
+  return [
+    { username: 'adaora-marketing' },
+    { username: 'kwame-digital' },
+    { username: 'fatima-social' },
+    { username: 'chidi-growth' },
+    { username: 'amina-content' },
+    { username: 'tunde-ads' },
+    { username: 'zara-email' },
+    { username: 'omar-analytics' }
+  ];
+}
 import { motion } from 'framer-motion';
 import { 
   Star, MapPin, Calendar, TrendingUp, Users, Award, MessageSquare, 
