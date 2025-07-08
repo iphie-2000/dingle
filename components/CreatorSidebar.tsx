@@ -12,7 +12,8 @@ import {
   ClipboardList,
   ChevronLeft,
   ChevronRight,
-  Users
+  Users,
+  BriefcaseBusiness
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -35,6 +36,12 @@ const CreatorSidebar = () => {
       label: 'Marketing',
       href: '/marketing',
       color: 'text-purple-600'
+    },
+    {
+      icon: BriefcaseBusiness,
+      label: 'Experts',
+      href: '/marketing/hire',
+      color: 'text-blue-600'
     },
     {
       icon: Package,

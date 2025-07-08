@@ -27,7 +27,6 @@ const Navbar = () => {
     { href: '/', label: 'Home' },
     { href: '/marketplace', label: 'Marketplace' },
     { href: '/marketers', label: 'Marketers' },
-    { href: '#how-it-works', label: 'How It Works' },
     { href: '#about', label: 'About' },
     { href: '#founders', label: 'Meet the Founders' },
     { href: '#explore', label: 'Explore' },
