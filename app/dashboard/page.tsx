@@ -176,7 +176,7 @@ export default function Dashboard() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-        <Navbar />
+        <CreatorNavbar />
         <div className="pt-24 flex items-center justify-center min-h-screen">
           <motion.div
             className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full"
