@@ -402,7 +402,6 @@ export default function Marketplace() {
                   className="border-orange-500 text-orange-600 hover:bg-orange-50"
                 >
                   <ShoppingCart className="w-4 h-4 mr-2" />
-                  Add to Cart
                 </Button>
                 <Link href={`/checkout?product=${product.id}`}>
                   <Button
