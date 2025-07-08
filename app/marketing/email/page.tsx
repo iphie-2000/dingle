@@ -16,7 +16,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import Navbar from '@/components/Navbar';
+import CreatorNavbar from '@/components/CreatorNavbar';
+import CreatorSidebar from '@/components/CreatorSidebar';
 
 // Mock data for campaigns
 const mockCampaigns = [
@@ -116,9 +117,10 @@ export default function EmailMarketing() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-      <Navbar />
+      <CreatorNavbar />
+      <CreatorSidebar />
       
-      <div className="pt-24 pb-12">
+      <div className="pt-24 pb-12 ml-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <motion.div

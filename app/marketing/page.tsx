@@ -6,8 +6,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import CreatorNavbar from '@/components/CreatorNavbar';
+import CreatorSidebar from '@/components/CreatorSidebar';
 
 const marketingTools = [
   {
@@ -86,10 +86,11 @@ const marketingStats = [
 export default function MarketingOverview() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-      <Navbar />
+      <CreatorNavbar />
+      <CreatorSidebar />
       
       {/* Hero Section */}
-      <section className="pt-24 pb-12 bg-gradient-to-br from-purple-600 via-blue-600 to-teal-600">
+      <section className="pt-24 pb-12 ml-20 bg-gradient-to-br from-purple-600 via-blue-600 to-teal-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -325,8 +326,6 @@ export default function MarketingOverview() {
           </motion.div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }

@@ -16,7 +16,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import Navbar from '@/components/Navbar';
+import CreatorNavbar from '@/components/CreatorNavbar';
+import CreatorSidebar from '@/components/CreatorSidebar';
 
 const categories = [
   { value: 'courses', label: 'Online Courses', icon: '📚' },
@@ -170,9 +171,10 @@ export default function CreateProduct() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-      <Navbar />
+      <CreatorNavbar />
+      <CreatorSidebar />
       
-      <div className="pt-24 pb-12">
+      <div className="pt-24 pb-12 ml-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <motion.div

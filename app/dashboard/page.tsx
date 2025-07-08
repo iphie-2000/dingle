@@ -16,7 +16,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import Navbar from '@/components/Navbar';
+import CreatorNavbar from '@/components/CreatorNavbar';
+import CreatorSidebar from '@/components/CreatorSidebar';
 
 // Mock data for dashboard
 const mockStats = {
@@ -189,9 +190,10 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-      <Navbar />
+      <CreatorNavbar />
+      <CreatorSidebar />
       
-      <div className="pt-24 pb-12">
+      <div className="pt-24 pb-12 ml-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <motion.div
