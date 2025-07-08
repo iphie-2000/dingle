@@ -11,7 +11,8 @@ import {
   ShoppingBag, 
   ClipboardList,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Users
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -52,6 +53,12 @@ const CreatorSidebar = () => {
       label: 'Order Management',
       href: '/dashboard/order-management',
       color: 'text-teal-600'
+    },
+    {
+      icon: Users,
+      label: 'Marketing Orders',
+      href: '/dashboard/marketing-orders',
+      color: 'text-indigo-600'
     },
     {
       icon: Settings,

@@ -133,12 +133,20 @@ export default function HireMarketer() {
   const [selectedMarketer, setSelectedMarketer] = useState(null);
   const [isHireDialogOpen, setIsHireDialogOpen] = useState(false);
   const [hireFormData, setHireFormData] = useState({
-    productTitle: '',
-    affiliatePercentage: '15',
+    products: [{ title: '', commission: '15' }],
     message: '',
     budget: '',
     timeline: ''
   });
+
+  // Mock user products
+  const userProducts = [
+    { id: '1', title: 'Digital Marketing Masterclass', price: 25000 },
+    { id: '2', title: 'African Art Collection', price: 18000 },
+    { id: '3', title: 'Business Templates Pack', price: 12000 },
+    { id: '4', title: 'Afrobeat Production Kit', price: 15000 },
+    { id: '5', title: 'Photography Course', price: 22000 }
+  ];
 
   // Filter only approved marketers
   const approvedMarketers = mockMarketers.filter(marketer => marketer.status === 'approved');
@@ -216,8 +224,7 @@ export default function HireMarketer() {
     });
     setIsHireDialogOpen(false);
     setHireFormData({
-      productTitle: '',
-      affiliatePercentage: '15',
+      products: [{ title: '', commission: '15' }],
       message: '',
       budget: '',
       timeline: ''
@@ -474,35 +481,94 @@ export default function HireMarketer() {
                   Hire {selectedMarketer?.name}
                 </DialogTitle>
               </DialogHeader>
-              <form onSubmit={handleHireSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="productTitle">Product Title</Label>
-                  <Input
-                    id="productTitle"
-                    placeholder="Enter your product title"
-                    value={hireFormData.productTitle}
-                    onChange={(e) => setHireFormData({...hireFormData, productTitle: e.target.value})}
-                    required
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="affiliatePercentage">Commission Percentage</Label>
-                  <Select 
-                    value={hireFormData.affiliatePercentage} 
-                    onValueChange={(value) => setHireFormData({...hireFormData, affiliatePercentage: value})}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="10">10%</SelectItem>
-                      <SelectItem value="15">15%</SelectItem>
-                      <SelectItem value="20">20%</SelectItem>
-                      <SelectItem value="25">25%</SelectItem>
-                      <SelectItem value="30">30%</SelectItem>
-                    </SelectContent>
-                  </Select>
+              <form onSubmit={handleHireSubmit} className="space-y-4 max-h-96 overflow-y-auto">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label>Products to Market</Label>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setHireFormData({
+                        ...hireFormData,
+                        products: [...hireFormData.products, { title: '', commission: '15' }]
+                      })}
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Product
+                    </Button>
+                  </div>
+                  
+                  {hireFormData.products.map((product, index) => (
+                    <div key={index} className="p-4 border rounded-lg space-y-3">
+                      <div className="flex items-center justify-between">
+                        <Label>Product {index + 1}</Label>
+                        {hireFormData.products.length > 1 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setHireFormData({
+                              ...hireFormData,
+                              products: hireFormData.products.filter((_, i) => i !== index)
+                            })}
+                            className="text-red-500 hover:text-red-700"
+                          >
+                            Remove
+                          </Button>
+                        )}
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor={`product-${index}`}>Select Product</Label>
+                        <Select 
+                          value={product.title} 
+                          onValueChange={(value) => {
+                            const updatedProducts = [...hireFormData.products];
+                            updatedProducts[index].title = value;
+                            setHireFormData({...hireFormData, products: updatedProducts});
+                          }}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choose a product" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {userProducts.map((prod) => (
+                              <SelectItem key={prod.id} value={prod.title}>
+                                {prod.title} - ₦{prod.price.toLocaleString()}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor={`commission-${index}`}>Commission Percentage</Label>
+                        <Select 
+                          value={product.commission} 
+                          onValueChange={(value) => {
+                            const updatedProducts = [...hireFormData.products];
+                            updatedProducts[index].commission = value;
+                            setHireFormData({...hireFormData, products: updatedProducts});
+                          }}
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="5">5%</SelectItem>
+                            <SelectItem value="10">10%</SelectItem>
+                            <SelectItem value="15">15%</SelectItem>
+                            <SelectItem value="20">20%</SelectItem>
+                            <SelectItem value="25">25%</SelectItem>
+                            <SelectItem value="30">30%</SelectItem>
+                            <SelectItem value="35">35%</SelectItem>
+                            <SelectItem value="40">40%</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="space-y-2">
