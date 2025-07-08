@@ -1,18 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-
-// This function is required for static export with dynamic routes
-export async function generateStaticParams() {
-  // Return the usernames that should be pre-generated
-  return [
-    { username: 'adaora-marketing' },
-    { username: 'kwame-growth' },
-    { username: 'fatima-digital' },
-    { username: 'chidi-conversion' },
-    { username: 'amina-creative' }
-  ];
-}
 import { motion } from 'framer-motion';
 import { 
   Star, MapPin, Calendar, TrendingUp, Users, Award, MessageSquare, 
@@ -146,10 +134,22 @@ export default function MarketerProfile() {
 
   const handleHireSubmit = (e) => {
     e.preventDefault();
-    console.log('Hire request:', hireFormData);
+    console.log('Hire request:', {
+      marketer: marketerData,
+      ...hireFormData
+    });
     setIsHireDialogOpen(false);
-    // Show success message or redirect
-    alert('Hire request sent successfully!');
+    
+    // Reset form
+    setHireFormData({
+      products: [{ title: '', commission: '15' }],
+      message: '',
+      budget: '',
+      timeline: ''
+    });
+    
+    // Show success alert
+    alert(`🎉 Hire request sent successfully to ${marketerData.name}! They will review your request and get back to you soon.`);
   };
 
   return (
@@ -351,7 +351,11 @@ export default function MarketerProfile() {
                             />
                           </div>
                           
-                          <Button type="submit" className="w-full bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white">
+                          <Button 
+                            type="submit" 
+                            className="w-full bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white"
+                            disabled={!hireFormData.products.some(p => p.title)}
+                          >
                             Send Hire Request
                           </Button>
                         </form>

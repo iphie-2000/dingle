@@ -304,13 +304,15 @@ export default function Marketers() {
                   View Profile
                 </Button>
               </Link>
-              <Button
-                size="sm"
-                className="bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white"
-              >
-                <MessageSquare className="w-4 h-4 mr-2" />
-                Hire
-              </Button>
+              <Link href="/marketing/hire">
+                <Button
+                  size="sm"
+                  className="bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white"
+                >
+                  <MessageSquare className="w-4 h-4 mr-2" />
+                  Hire
+                </Button>
+              </Link>
             </div>
           </div>
         </CardContent>

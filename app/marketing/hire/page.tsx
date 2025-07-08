@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Star, MapPin, TrendingUp, Users, Award, Eye, MessageSquare, ArrowLeft } from 'lucide-react';
+import { Search, Star, MapPin, TrendingUp, Users, Award, Eye, MessageSquare, ArrowLeft, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -340,7 +340,7 @@ export default function HireMarketer() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
       <CreatorNavbar />
       <CreatorSidebar />
-      
+
       <div className="pt-24 pb-12 ml-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
@@ -498,7 +498,7 @@ export default function HireMarketer() {
                       Add Product
                     </Button>
                   </div>
-                  
+
                   {hireFormData.products.map((product, index) => (
                     <div key={index} className="p-4 border rounded-lg space-y-3">
                       <div className="flex items-center justify-between">
@@ -518,7 +518,7 @@ export default function HireMarketer() {
                           </Button>
                         )}
                       </div>
-                      
+
                       <div className="space-y-2">
                         <Label htmlFor={`product-${index}`}>Select Product</Label>
                         <Select 
@@ -541,7 +541,7 @@ export default function HireMarketer() {
                           </SelectContent>
                         </Select>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <Label htmlFor={`commission-${index}`}>Commission Percentage</Label>
                         <Select 
@@ -590,7 +590,7 @@ export default function HireMarketer() {
                     onChange={(e) => setHireFormData({...hireFormData, timeline: e.target.value})}
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="message">Message (Optional)</Label>
                   <Textarea
@@ -601,10 +601,14 @@ export default function HireMarketer() {
                     className="min-h-20"
                   />
                 </div>
-                
-                <Button type="submit" className="w-full bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white">
-                  Send Hire Request
-                </Button>
+
+                <Button 
+                            type="submit" 
+                            className="w-full bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white"
+                            disabled={!hireFormData.products.some(p => p.title)}
+                          >
+                            Send Hire Request
+                          </Button>
               </form>
             </DialogContent>
           </Dialog>
