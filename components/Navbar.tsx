@@ -2,16 +2,18 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import AnimatedLogo from './AnimatedLogo';
 import { Button } from './ui/button';
+import { useCart } from '@/lib/cart-context';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { getCartCount } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,9 +27,6 @@ const Navbar = () => {
     { href: '/', label: 'Home' },
     { href: '/marketplace', label: 'Marketplace' },
     { href: '/marketers', label: 'Marketers' },
-    { href: '/marketing', label: 'Marketing' },
-    { href: '/dashboard', label: 'Dashboard' },
-    { href: '/admin', label: 'Admin' },
     { href: '#how-it-works', label: 'How It Works' },
     { href: '#about', label: 'About' },
     { href: '#founders', label: 'Meet the Founders' },
@@ -91,10 +90,7 @@ const Navbar = () => {
                     href={link.href}
                     className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-orange-100 hover:to-purple-100 hover:scale-105 ${
                       pathname === link.href || 
-                      (link.href === '/dashboard' && pathname.startsWith('/dashboard')) ||
-                      (link.href === '/marketers' && pathname.startsWith('/marketers')) ||
-                      (link.href === '/marketing' && pathname.startsWith('/marketing')) ||
-                      (link.href === '/admin' && pathname.startsWith('/admin'))
+                      (link.href === '/marketers' && pathname.startsWith('/marketers'))
                         ? 'bg-gradient-to-r from-orange-500 to-purple-600 text-white'
                         : scrolled 
                           ? 'text-gray-700 hover:text-orange-600' 
@@ -110,6 +106,30 @@ const Navbar = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Link href="/cart">
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  className={`relative font-medium transition-all duration-200 hover:scale-105 ${
+                    scrolled 
+                      ? 'text-gray-700 hover:text-orange-600 hover:bg-orange-50' 
+                      : 'text-white hover:text-orange-200 hover:bg-white/10'
+                  }`}
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  {getCartCount() > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      {getCartCount()}
+                    </span>
+                  )}
+                </Button>
+              </Link>
+            </motion.div>
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -207,10 +227,7 @@ const Navbar = () => {
                       href={link.href}
                       className={`block px-4 py-3 font-medium rounded-lg transition-all duration-200 ${
                         pathname === link.href || 
-                        (link.href === '/dashboard' && pathname.startsWith('/dashboard')) ||
-                        (link.href === '/marketers' && pathname.startsWith('/marketers')) ||
-                        (link.href === '/marketing' && pathname.startsWith('/marketing')) ||
-                        (link.href === '/admin' && pathname.startsWith('/admin'))
+                        (link.href === '/marketers' && pathname.startsWith('/marketers'))
                           ? 'bg-gradient-to-r from-orange-500 to-purple-600 text-white'
                           : 'text-gray-700 hover:bg-gradient-to-r hover:from-orange-100 hover:to-purple-100 hover:text-orange-600'
                       }`}

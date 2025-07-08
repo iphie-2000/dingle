@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useCart } from '@/lib/cart-context';
 
 interface Product {
   id: string;
@@ -212,6 +213,7 @@ export default function Marketplace() {
   const [sortBy, setSortBy] = useState('recent');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [favorites, setFavorites] = useState<string[]>([]);
+  const { addToCart } = useCart();
 
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = mockProducts;
@@ -392,13 +394,25 @@ export default function Marketplace() {
               <div className="text-2xl font-bold gradient-text">
                 {product.currency}{product.price.toLocaleString()}
               </div>
-              <Button
-                size="sm"
-                className="bg-gradient-to-r from-orange-500 to-purple-600 hover:from-orange-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-              >
-                <ShoppingCart className="w-4 h-4 mr-2" />
-                Buy Now
-              </Button>
+              <div className="flex space-x-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => addToCart(product)}
+                  className="border-orange-500 text-orange-600 hover:bg-orange-50"
+                >
+                  <ShoppingCart className="w-4 h-4 mr-2" />
+                  Add to Cart
+                </Button>
+                <Link href={`/checkout?product=${product.id}`}>
+                  <Button
+                    size="sm"
+                    className="bg-gradient-to-r from-orange-500 to-purple-600 hover:from-orange-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  >
+                    Buy Now
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </CardContent>
