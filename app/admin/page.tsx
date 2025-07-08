@@ -234,7 +234,7 @@ export default function AdminDashboard() {
     // API call to handle flagged product
   };
 
-  const StatCard = ({ title, value, change, icon: Icon, color, currency = '' }) => (
+  const StatCard = ({ title:any, value:a ny,  change: any, icon: Icon, color, currency = '' }) => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
