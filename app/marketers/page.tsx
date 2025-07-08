@@ -96,7 +96,7 @@ const mockMarketers: Marketer[] = [
   },
   {
     id: '5',
-    username: 'amina-creative',
+    username: 'amina-content',
     name: 'Amina Hassan',
     bio: 'Creative marketing strategist specializing in visual content and brand storytelling for digital products.',
     country: 'Kenya',
