@@ -1,7 +1,3 @@
-` tags. I will ensure that no forbidden words are included and that the indentation and structure of the original code are preserved.
-
-```
-<replit_final_file>
 'use client';
 
 import { useState } from 'react';
