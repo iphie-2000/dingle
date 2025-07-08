@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, MessageSquare, Users, Megaphone, TrendingUp, Target, BarChart, Zap } from 'lucide-react';
+import { Mail, MessageSquare, Users, Megaphone, TrendingUp, Target, BarChart, Zap, Plus, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,319 +13,220 @@ const marketingTools = [
   {
     id: 'email',
     title: 'Email Marketing',
-    description: 'Create powerful email campaigns to reach your customers directly in their inbox with personalized messages.',
+    description: 'Create powerful email campaigns with personalized messages and advanced analytics.',
     icon: Mail,
     color: 'from-blue-500 to-cyan-500',
-    features: ['Campaign Builder', 'Email Templates', 'Analytics & Reports', 'Automation'],
-    stats: { reach: '95%', conversion: '18%', cost: 'Low' },
+    stats: { campaigns: 45, openRate: '58%', clicks: '2.1K' },
     href: '/marketing/email'
   },
   {
     id: 'sms',
     title: 'SMS Marketing',
-    description: 'Reach customers instantly with SMS campaigns. Perfect for African markets with high mobile penetration.',
+    description: 'Reach customers instantly with high-converting SMS campaigns.',
     icon: MessageSquare,
     color: 'from-green-500 to-emerald-500',
-    features: ['Instant Delivery', 'High Open Rates', 'Local Numbers', 'Bulk Messaging'],
-    stats: { reach: '98%', conversion: '25%', cost: 'Medium' },
+    stats: { campaigns: 23, deliveryRate: '94%', clicks: '1.8K' },
     href: '/marketing/sms'
   },
   {
     id: 'marketers',
-    title: 'Hire Expert Marketers',
-    description: 'Connect with professional marketers who understand African markets and can scale your business.',
+    title: 'Expert Marketers',
+    description: 'Connect with verified marketing professionals to scale your business.',
     icon: Users,
     color: 'from-purple-500 to-pink-500',
-    features: ['Verified Experts', 'Performance Tracking', 'Custom Commissions', 'Dedicated Support'],
-    stats: { reach: '300%', conversion: '45%', cost: 'Variable' },
+    stats: { experts: 156, avgConversion: '45%', hired: 89 },
     href: '/marketing/hire'
   },
   {
     id: 'sponsored',
     title: 'Sponsored Ads',
-    description: 'Promote your products with targeted ads across the Dingle platform and mobile app.',
+    description: 'Promote your products across the Dingle platform with targeted ads.',
     icon: Megaphone,
     color: 'from-orange-500 to-red-500',
-    features: ['Platform Integration', 'Audience Targeting', 'Real-time Analytics', 'Budget Control'],
-    stats: { reach: '500%', conversion: '35%', cost: 'High' },
+    stats: { campaigns: 12, impressions: '125K', ctr: '2.6%' },
     href: '/marketing/sponsored-ads'
   }
 ];
 
-const successStories = [
-  {
-    name: 'Adaora Okonkwo',
-    product: 'Digital Marketing Course',
-    strategy: 'Email + SMS',
-    result: '400% increase in sales',
-    avatar: 'AO'
-  },
-  {
-    name: 'Kwame Asante',
-    product: 'African Art Collection',
-    strategy: 'Expert Marketer',
-    result: '250% revenue growth',
-    avatar: 'KA'
-  },
-  {
-    name: 'Fatima Hassan',
-    product: 'Business Templates',
-    strategy: 'Sponsored Ads',
-    result: '180% more visibility',
-    avatar: 'FH'
-  }
+const marketingStats = [
+  { label: 'Active Campaigns', value: '28', icon: TrendingUp, change: '+12%' },
+  { label: 'Total Reach', value: '145K', icon: Target, change: '+18%' },
+  { label: 'Conversion Rate', value: '24.5%', icon: BarChart, change: '+5.2%' },
+  { label: 'Revenue Generated', value: '₦2.4M', icon: Zap, change: '+23%' }
 ];
 
-const marketingStats = [
-  { label: 'Active Campaigns', value: '2,450+', icon: TrendingUp },
-  { label: 'Messages Sent', value: '1.2M+', icon: MessageSquare },
-  { label: 'Conversion Rate', value: '28%', icon: Target },
-  { label: 'Revenue Generated', value: '₦45M+', icon: BarChart }
+const recentActivity = [
+  {
+    type: 'Email Campaign',
+    name: 'Product Launch Series',
+    status: 'Active',
+    metric: '68% open rate',
+    time: '2 hours ago'
+  },
+  {
+    type: 'SMS Campaign',
+    name: 'Flash Sale Alert',
+    status: 'Completed',
+    metric: '156 conversions',
+    time: '1 day ago'
+  },
+  {
+    type: 'Marketer Hire',
+    name: 'Adaora Okonkwo',
+    status: 'In Progress',
+    metric: '3 products',
+    time: '3 days ago'
+  },
+  {
+    type: 'Sponsored Ad',
+    name: 'Course Promotion',
+    status: 'Active',
+    metric: '2.8% CTR',
+    time: '1 week ago'
+  }
 ];
 
 export default function MarketingOverview() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+    <div className="min-h-screen bg-gray-50/50">
       <CreatorNavbar />
       <CreatorSidebar />
 
-      {/* Hero Section */}
-      <section className="pt-20 pb-12 ml-64 bg-gradient-to-br from-purple-600 via-blue-600 to-teal-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="ml-64 pt-20 p-8">
+        <div className="max-w-7xl mx-auto space-y-8">
+          {/* Header */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center text-white"
+            transition={{ duration: 0.6 }}
+            className="flex items-center justify-between"
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              Marketing Strategies
-            </h1>
-            <p className="text-xl md:text-2xl text-purple-100 max-w-3xl mx-auto">
-              Powerful tools to grow your digital business across Africa
-            </p>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Marketing Hub</h1>
+              <p className="text-gray-600">Manage your marketing campaigns and grow your business</p>
+            </div>
+            <Button className="bg-gradient-to-r from-orange-500 to-purple-600 hover:from-orange-600 hover:to-purple-700 text-white">
+              <Plus className="w-4 h-4 mr-2" />
+              New Campaign
+            </Button>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Stats Section */}
-      <section className="py-12 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {marketingStats.map((stat, index) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-center"
               >
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <stat.icon className="w-6 h-6 text-purple-600" />
-                </div>
-                <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-gray-600 text-sm">{stat.label}</div>
+                <Card className="border-0 shadow-sm bg-white hover:shadow-md transition-shadow duration-200">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <stat.icon className="w-6 h-6 text-gray-700" />
+                      </div>
+                      <Badge variant="secondary" className="text-green-600 bg-green-50">
+                        {stat.change}
+                      </Badge>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                      <p className="text-sm text-gray-600">{stat.label}</p>
+                    </div>
+                  </CardContent>
+                </Card>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Marketing Tools */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
-              Choose Your Marketing Strategy
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Select the perfect marketing tool for your digital products and start growing your business today
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Marketing Tools */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {marketingTools.map((tool, index) => (
               <motion.div
                 key={tool.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-                className="group"
               >
-                <Card className="h-full hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden">
-                  <div className={`h-2 bg-gradient-to-r ${tool.color}`} />
-
+                <Card className="border-0 shadow-sm bg-white hover:shadow-md transition-all duration-200 group">
                   <CardHeader className="pb-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className={`w-16 h-16 bg-gradient-to-r ${tool.color} rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                        <tool.icon className="w-8 h-8 text-white" />
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm text-gray-500 mb-1">Avg. Conversion</div>
-                        <div className="text-2xl font-bold text-green-600">{tool.stats.conversion}</div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className={`w-12 h-12 bg-gradient-to-r ${tool.color} rounded-lg flex items-center justify-center`}>
+                          <tool.icon className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg font-semibold text-gray-900">{tool.title}</CardTitle>
+                          <p className="text-sm text-gray-600 mt-1">{tool.description}</p>
+                        </div>
                       </div>
                     </div>
-
-                    <CardTitle className="text-2xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
-                      {tool.title}
-                    </CardTitle>
                   </CardHeader>
 
-                  <CardContent className="space-y-6">
-                    <p className="text-gray-600 leading-relaxed">
-                      {tool.description}
-                    </p>
-
-                    {/* Features */}
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-3">Key Features:</h4>
-                      <div className="grid grid-cols-2 gap-2">
-                        {tool.features.map((feature) => (
-                          <div key={feature} className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-green-500 rounded-full" />
-                            <span className="text-sm text-gray-600">{feature}</span>
+                  <CardContent className="pt-0">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="grid grid-cols-3 gap-4 flex-1">
+                        {Object.entries(tool.stats).map(([key, value]) => (
+                          <div key={key} className="text-center">
+                            <p className="text-lg font-bold text-gray-900">{value}</p>
+                            <p className="text-xs text-gray-500 capitalize">{key.replace(/([A-Z])/g, ' $1').toLowerCase()}</p>
                           </div>
                         ))}
                       </div>
+                      <Link href={tool.href}>
+                        <Button variant="ghost" size="sm" className="group-hover:bg-gray-100">
+                          <ArrowRight className="w-4 h-4" />
+                        </Button>
+                      </Link>
                     </div>
-
-                    {/* Stats */}
-                    <div className="grid grid-cols-3 gap-4 py-4 border-t border-gray-100">
-                      <div className="text-center">
-                        <div className="text-lg font-bold text-purple-600">{tool.stats.reach}</div>
-                        <div className="text-xs text-gray-500">Reach</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-lg font-bold text-green-600">{tool.stats.conversion}</div>
-                        <div className="text-xs text-gray-500">Conversion</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-lg font-bold text-orange-600">{tool.stats.cost}</div>
-                        <div className="text-xs text-gray-500">Cost</div>
-                      </div>
-                    </div>
-
-                    {/* CTA Button */}
-                    <Link href={tool.href}>
-                      <Button className={`w-full bg-gradient-to-r ${tool.color} hover:shadow-lg transition-all duration-300 hover:scale-105 text-white font-semibold`}>
-                        <Zap className="w-4 h-4 mr-2" />
-                        Get Started
-                      </Button>
-                    </Link>
                   </CardContent>
                 </Card>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Success Stories */}
-      <section className="py-16 bg-gradient-to-br from-purple-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Recent Activity */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
-              Success Stories
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              See how African creators are growing their businesses with our marketing tools
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {successStories.map((story, index) => (
-              <motion.div
-                key={story.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-              >
-                <Card className="h-full hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm">
-                  <CardContent className="p-6 text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
-                      {story.avatar}
+            <Card className="border-0 shadow-sm bg-white">
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold text-gray-900">Recent Activity</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {recentActivity.map((activity, index) => (
+                    <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3">
+                          <Badge variant="outline" className="text-xs">
+                            {activity.type}
+                          </Badge>
+                          <span className="font-medium text-gray-900">{activity.name}</span>
+                        </div>
+                        <div className="flex items-center space-x-4 mt-2 text-sm text-gray-600">
+                          <span className={`px-2 py-1 rounded-full text-xs ${
+                            activity.status === 'Active' ? 'bg-green-100 text-green-800' :
+                            activity.status === 'Completed' ? 'bg-blue-100 text-blue-800' :
+                            'bg-yellow-100 text-yellow-800'
+                          }`}>
+                            {activity.status}
+                          </span>
+                          <span>{activity.metric}</span>
+                          <span>{activity.time}</span>
+                        </div>
+                      </div>
                     </div>
-
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                      {story.name}
-                    </h3>
-
-                    <p className="text-gray-600 mb-3">
-                      {story.product}
-                    </p>
-
-                    <Badge variant="secondary" className="mb-4">
-                      {story.strategy}
-                    </Badge>
-
-                    <div className="text-2xl font-bold text-green-600">
-                      {story.result}
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-br from-orange-500 to-purple-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-white"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Scale Your Business?
-            </h2>
-            <p className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
-              Join thousands of African creators who are already using our marketing tools to grow their digital businesses
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-              <Link href="/dashboard/create">
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto bg-white text-purple-600 hover:bg-gray-100 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                >
-                  Create Your First Product
-                </Button>
-              </Link>
-              <Link href="/signup">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-purple-600 font-semibold transition-all duration-300 hover:scale-105"
-                >
-                  Get Started Free
-                </Button>
-              </Link>
-            </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

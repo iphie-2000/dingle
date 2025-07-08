@@ -2,26 +2,26 @@
 
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Star, MapPin, TrendingUp, Users, Award, Eye, MessageSquare, ArrowLeft, Plus } from 'lucide-react';
+import { Search, Star, MapPin, Users, Eye, MessageSquare, ArrowLeft, Plus, Filter } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import CreatorNavbar from '@/components/CreatorNavbar';
 import CreatorSidebar from '@/components/CreatorSidebar';
 
-// Mock marketer data (reusing from marketers page)
+// Mock marketer data
 const mockMarketers = [
   {
     id: '1',
     username: 'adaora-marketing',
     name: 'Adaora Okonkwo',
-    bio: 'Digital marketing specialist with 8+ years experience helping African creators scale their businesses. Expert in SMS and email marketing campaigns.',
+    bio: 'Digital marketing specialist with 8+ years experience helping African creators scale their businesses.',
     country: 'Nigeria',
     rating: 4.9,
     reviewCount: 127,
@@ -30,15 +30,15 @@ const mockMarketers = [
     focusAreas: ['courses', 'ebooks', 'software'],
     avatar: 'AO',
     verified: true,
+    status: 'approved',
     joinedDate: '2023-01-15',
-    successStories: 45,
-    status: 'approved'
+    successStories: 45
   },
   {
     id: '2',
     username: 'kwame-growth',
     name: 'Kwame Asante',
-    bio: 'Growth marketing expert specializing in African markets. Helped 200+ creators increase their revenue by an average of 300%.',
+    bio: 'Growth marketing expert specializing in African markets. Helped 200+ creators increase revenue.',
     country: 'Ghana',
     rating: 4.8,
     reviewCount: 98,
@@ -47,15 +47,15 @@ const mockMarketers = [
     focusAreas: ['music', 'art', 'templates'],
     avatar: 'KA',
     verified: true,
+    status: 'approved',
     joinedDate: '2022-11-20',
-    successStories: 67,
-    status: 'approved'
+    successStories: 67
   },
   {
     id: '3',
     username: 'fatima-digital',
     name: 'Fatima Al-Rashid',
-    bio: 'Social media and content marketing strategist. Passionate about empowering female entrepreneurs across Africa.',
+    bio: 'Social media and content marketing strategist focused on empowering African entrepreneurs.',
     country: 'Egypt',
     rating: 4.7,
     reviewCount: 84,
@@ -64,9 +64,9 @@ const mockMarketers = [
     focusAreas: ['photography', 'art', 'courses'],
     avatar: 'FA',
     verified: true,
+    status: 'approved',
     joinedDate: '2023-03-10',
-    successStories: 32,
-    status: 'approved'
+    successStories: 32
   },
   {
     id: '4',
@@ -139,7 +139,6 @@ export default function HireMarketer() {
     timeline: ''
   });
 
-  // Mock user products
   const userProducts = [
     { id: '1', title: 'Digital Marketing Masterclass', price: 25000 },
     { id: '2', title: 'African Art Collection', price: 18000 },
@@ -148,13 +147,9 @@ export default function HireMarketer() {
     { id: '5', title: 'Photography Course', price: 22000 }
   ];
 
-  // Filter only approved marketers
-  const approvedMarketers = mockMarketers.filter(marketer => marketer.status === 'approved');
-
   const filteredAndSortedMarketers = useMemo(() => {
-    let filtered = approvedMarketers;
+    let filtered = mockMarketers.filter(marketer => marketer.status === 'approved');
 
-    // Filter by search query
     if (searchQuery) {
       filtered = filtered.filter(marketer =>
         marketer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -163,19 +158,16 @@ export default function HireMarketer() {
       );
     }
 
-    // Filter by category
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(marketer => 
         marketer.focusAreas.includes(selectedCategory)
       );
     }
 
-    // Filter by country
     if (selectedCountry !== 'all') {
       filtered = filtered.filter(marketer => marketer.country === selectedCountry);
     }
 
-    // Sort marketers
     switch (sortBy) {
       case 'rating':
         filtered.sort((a, b) => b.rating - a.rating);
@@ -187,10 +179,8 @@ export default function HireMarketer() {
         filtered.sort((a, b) => b.conversionRate - a.conversionRate);
         break;
       case 'recent':
-        filtered.sort((a, b) => new Date(b.joinedDate).getTime() - new Date(a.joinedDate).getTime());
-        break;
-      default:
-        break;
+          filtered.sort((a, b) => new Date(b.joinedDate).getTime() - new Date(a.joinedDate).getTime());
+          break;
     }
 
     return filtered;
@@ -203,9 +193,7 @@ export default function HireMarketer() {
         className={`w-4 h-4 ${
           i < Math.floor(rating) 
             ? 'text-yellow-400 fill-current' 
-            : i < rating 
-              ? 'text-yellow-400 fill-current opacity-50' 
-              : 'text-gray-300'
+            : 'text-gray-300'
         }`}
       />
     ));
@@ -218,10 +206,6 @@ export default function HireMarketer() {
 
   const handleHireSubmit = (e) => {
     e.preventDefault();
-    console.log('Hire request:', {
-      marketer: selectedMarketer,
-      ...hireFormData
-    });
     setIsHireDialogOpen(false);
     setHireFormData({
       products: [{ title: '', commission: '15' }],
@@ -229,7 +213,6 @@ export default function HireMarketer() {
       budget: '',
       timeline: ''
     });
-    // Show success message
     alert('Hire request sent successfully!');
   };
 
@@ -314,10 +297,7 @@ export default function HireMarketer() {
             {/* Actions */}
             <div className="flex space-x-2">
               <Link href={`/marketers/${marketer.username}`} className="flex-1">
-                <Button
-                  variant="outline"
-                  className="w-full border-purple-200 text-purple-600 hover:bg-purple-50 hover:border-purple-300"
-                >
+                <Button variant="outline" className="w-full border-purple-200 text-purple-600 hover:bg-purple-50 hover:border-purple-300">
                   <Eye className="w-4 h-4 mr-2" />
                   View Profile
                 </Button>
@@ -337,55 +317,52 @@ export default function HireMarketer() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+    <div className="min-h-screen bg-gray-50/50">
       <CreatorNavbar />
       <CreatorSidebar />
 
-      <div className="pt-24 pb-12 ml-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="ml-64 pt-20 p-8">
+        <div className="max-w-7xl mx-auto space-y-8">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center justify-between mb-8"
+            className="flex items-center justify-between"
           >
             <div className="flex items-center space-x-4">
               <Link href="/marketing">
-                <Button variant="outline" size="sm" className="border-gray-300">
+                <Button variant="outline" size="sm">
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Marketing
+                  Back
                 </Button>
               </Link>
               <div>
-                <h1 className="text-3xl font-bold gradient-text">Hire Expert Marketers</h1>
-                <p className="text-gray-600">Connect with approved marketing professionals</p>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">Hire Expert Marketers</h1>
+                <p className="text-gray-600">Connect with verified marketing professionals</p>
               </div>
             </div>
           </motion.div>
 
           {/* Search and Filters */}
-          <section className="py-8 bg-white rounded-xl shadow-lg mb-8">
-            <div className="px-6">
-              <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
-                {/* Search Bar */}
-                <div className="flex-1 max-w-md">
+          <Card className="border-0 shadow-sm bg-white">
+            <CardContent className="p-6">
+              <div className="flex flex-col lg:flex-row gap-4">
+                <div className="flex-1">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input
                       type="text"
-                      placeholder="Search marketers by name or expertise..."
+                      placeholder="Search marketers..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-12 h-12 border-2 border-gray-200 focus:border-purple-500 transition-colors duration-200"
+                      className="pl-12 h-10"
                     />
                   </div>
                 </div>
-
-                {/* Filters */}
                 <div className="flex items-center space-x-4">
                   <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                    <SelectTrigger className="w-48 h-12 border-2 border-gray-200">
+                    <SelectTrigger className="w-48">
                       <SelectValue placeholder="Category" />
                     </SelectTrigger>
                     <SelectContent>
@@ -396,9 +373,19 @@ export default function HireMarketer() {
                       ))}
                     </SelectContent>
                   </Select>
-
+                  <Select value={sortBy} onValueChange={setSortBy}>
+                    <SelectTrigger className="w-48">
+                      <SelectValue placeholder="Sort by" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="rating">Best Rated</SelectItem>
+                      <SelectItem value="campaigns">Most Campaigns</SelectItem>
+                      <SelectItem value="conversion">Best Conversion</SelectItem>
+                      <SelectItem value="recent">Most Recent</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-                    <SelectTrigger className="w-48 h-12 border-2 border-gray-200">
+                    <SelectTrigger className="w-48">
                       <SelectValue placeholder="Country" />
                     </SelectTrigger>
                     <SelectContent>
@@ -409,69 +396,111 @@ export default function HireMarketer() {
                       ))}
                     </SelectContent>
                   </Select>
-
-                  <Select value={sortBy} onValueChange={setSortBy}>
-                    <SelectTrigger className="w-48 h-12 border-2 border-gray-200">
-                      <SelectValue placeholder="Sort by" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="rating">Best Rated</SelectItem>
-                      <SelectItem value="campaigns">Most Campaigns</SelectItem>
-                      <SelectItem value="conversion">Best Conversion</SelectItem>
-                      <SelectItem value="recent">Most Recent</SelectItem>
-                    </SelectContent>
-                  </Select>
                 </div>
               </div>
-            </div>
-          </section>
+            </CardContent>
+          </Card>
 
-          {/* Results Header */}
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">
-                Available Marketers
-              </h2>
-              <p className="text-gray-600 mt-1">
-                {filteredAndSortedMarketers.length} approved marketers found
-                {searchQuery && ` for "${searchQuery}"`}
-              </p>
-            </div>
+          {/* Results */}
+          <div className="flex items-center justify-between">
+            <p className="text-gray-600">
+              {filteredAndSortedMarketers.length} marketers found
+            </p>
           </div>
 
           {/* Marketers Grid */}
-          {filteredAndSortedMarketers.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredAndSortedMarketers.map((marketer) => (
-                <MarketerCard key={marketer.id} marketer={marketer} />
-              ))}
-            </div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center py-16"
-            >
-              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Users className="w-12 h-12 text-gray-400" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No marketers found</h3>
-              <p className="text-gray-600 mb-6">
-                Try adjusting your search or filter criteria
-              </p>
-              <Button
-                onClick={() => {
-                  setSearchQuery('');
-                  setSelectedCategory('all');
-                  setSelectedCountry('all');
-                }}
-                variant="outline"
-                className="border-2 border-purple-500 text-purple-600 hover:bg-purple-50"
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredAndSortedMarketers.map((marketer) => (
+              <motion.div
+                key={marketer.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                whileHover={{ y: -2 }}
               >
-                Clear Filters
-              </Button>
-            </motion.div>
-          )}
+                <Card className="border-0 shadow-sm bg-white hover:shadow-md transition-all duration-200">
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      {/* Header */}
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                            {marketer.avatar}
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900">{marketer.name}</h3>
+                            <div className="flex items-center space-x-2 text-sm text-gray-600">
+                              <MapPin className="w-4 h-4" />
+                              <span>{marketer.country}</span>
+                              {marketer.verified && (
+                                <Badge variant="secondary" className="bg-green-100 text-green-800 text-xs">
+                                  Verified
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Bio */}
+                      <p className="text-gray-600 text-sm line-clamp-3">
+                        {marketer.bio}
+                      </p>
+
+                      {/* Focus Areas */}
+                      <div className="flex flex-wrap gap-2">
+                        {marketer.focusAreas.slice(0, 3).map((area) => (
+                          <Badge key={area} variant="outline" className="text-xs">
+                            {categories.find(c => c.value === area)?.name || area}
+                          </Badge>
+                        ))}
+                      </div>
+
+                      {/* Stats */}
+                      <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
+                        <div className="text-center">
+                          <div className="flex items-center justify-center mb-1">
+                            {renderStars(marketer.rating)}
+                          </div>
+                          <div className="text-sm font-medium text-gray-900">{marketer.rating}</div>
+                          <div className="text-xs text-gray-500">({marketer.reviewCount})</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-lg font-bold text-purple-600 mb-1">
+                            {marketer.campaignsCompleted}
+                          </div>
+                          <div className="text-xs text-gray-500">Campaigns</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-lg font-bold text-green-600 mb-1">
+                            {marketer.conversionRate}%
+                          </div>
+                          <div className="text-xs text-gray-500">Conversion</div>
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex space-x-2 pt-4">
+                        <Link href={`/marketers/${marketer.username}`} className="flex-1">
+                          <Button variant="outline" className="w-full">
+                            <Eye className="w-4 h-4 mr-2" />
+                            View Profile
+                          </Button>
+                        </Link>
+                        <Button
+                          onClick={() => handleHireClick(marketer)}
+                          className="bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white"
+                        >
+                          <MessageSquare className="w-4 h-4 mr-2" />
+                          Hire
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
 
           {/* Hire Dialog */}
           <Dialog open={isHireDialogOpen} onOpenChange={setIsHireDialogOpen}>
@@ -520,7 +549,7 @@ export default function HireMarketer() {
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor={`product-${index}`}>Select Product</Label>
+                        <Label>Select Product</Label>
                         <Select 
                           value={product.title} 
                           onValueChange={(value) => {
@@ -543,7 +572,7 @@ export default function HireMarketer() {
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor={`commission-${index}`}>Commission Percentage</Label>
+                        <Label>Commission Percentage</Label>
                         <Select 
                           value={product.commission} 
                           onValueChange={(value) => {
@@ -556,14 +585,9 @@ export default function HireMarketer() {
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="5">5%</SelectItem>
-                            <SelectItem value="10">10%</SelectItem>
-                            <SelectItem value="15">15%</SelectItem>
-                            <SelectItem value="20">20%</SelectItem>
-                            <SelectItem value="25">25%</SelectItem>
-                            <SelectItem value="30">30%</SelectItem>
-                            <SelectItem value="35">35%</SelectItem>
-                            <SelectItem value="40">40%</SelectItem>
+                            {[5, 10, 15, 20, 25, 30, 35, 40].map(rate => (
+                              <SelectItem key={rate} value={rate.toString()}>{rate}%</SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                       </div>
@@ -572,9 +596,8 @@ export default function HireMarketer() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="budget">Budget Range</Label>
+                  <Label>Budget Range</Label>
                   <Input
-                    id="budget"
                     placeholder="e.g., ₦50,000 - ₦100,000"
                     value={hireFormData.budget}
                     onChange={(e) => setHireFormData({...hireFormData, budget: e.target.value})}
@@ -582,9 +605,8 @@ export default function HireMarketer() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="timeline">Timeline</Label>
+                  <Label>Timeline</Label>
                   <Input
-                    id="timeline"
                     placeholder="e.g., 2 weeks, 1 month"
                     value={hireFormData.timeline}
                     onChange={(e) => setHireFormData({...hireFormData, timeline: e.target.value})}
@@ -592,9 +614,8 @@ export default function HireMarketer() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="message">Message (Optional)</Label>
+                  <Label>Message (Optional)</Label>
                   <Textarea
-                    id="message"
                     placeholder="Tell the marketer about your project..."
                     value={hireFormData.message}
                     onChange={(e) => setHireFormData({...hireFormData, message: e.target.value})}
@@ -603,12 +624,12 @@ export default function HireMarketer() {
                 </div>
 
                 <Button 
-                            type="submit" 
-                            className="w-full bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white"
-                            disabled={!hireFormData.products.some(p => p.title)}
-                          >
-                            Send Hire Request
-                          </Button>
+                  type="submit" 
+                  className="w-full bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white"
+                  disabled={!hireFormData.products.some(p => p.title)}
+                >
+                  Send Hire Request
+                </Button>
               </form>
             </DialogContent>
           </Dialog>
